@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UtF-8"?>
+<language id="44">
+
+  <page id="6201985" title="Captions" voice="no">
+    <t id="1">Immortality Granted</t>
+    <t id="2">Assets Updated</t>
+    <t id="3">Player Owned Ships</t>
+    <t id="4">Player Owned Stations</t>
+	<t id="5">Initializing Immortality Core...</t>
+	<t id="6">Confirming All Assets...</t>
+  </page>
+
+</language>

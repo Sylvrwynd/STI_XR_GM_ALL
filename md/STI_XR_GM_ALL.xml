@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mdscript name="STI_XR_GM_ALL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="md.xsd">
+	<cues>
+		<cue name="PlayerShipImmortal" instantiate="true" checktime="player.age + 10000ms" checkinterval="1000s">
+			<actions>
+				<do_all>
+					<set_object_min_hull object="player.primaryship" exact="100"/>
+					<set_object_min_shield object="player.primaryship" exact="100"/>
+				</do_all>
+			</actions>
+		</cue>
+		<cue name="PlayerAssetsImmortal" instantiate="true" checktime="player.age + 10000ms" checkinterval="10000ms">
+			<actions>
+				<find_ship name="$Ships" class="[class.ship_xs, class.ship_s, class.ship_m, class.ship_l, class.ship_xl]" owner="faction.player" space="player.galaxy" multiple="true" />
+					<do_all exact="$Ships.count" counter="$j">
+						<find_object_component name="$components" object="$Ships.{$j}" class="class.destructible" multiple="true"/>
+					<do_all exact="$components.count" counter="$c">
+						<restore_object object="$components.{$c}" hull="100" recursive="true" />
+						<set_object_min_hull object="$components.{$c}" exact="100"/>
+						<set_object_min_shield object="$components.{$c}" exact="100"/>
+					</do_all>
+						<restore_object object="$Ships.{$c}" hull="100" recursive="true" />
+						<set_object_min_hull object="$Ships.{$j}" exact="100"/>
+						<set_object_min_shield object="$Ships.{$j}" exact="100"/>
+					</do_all>
+				<find_station  name="$stations" owner="faction.player" space="player.galaxy" multiple="true" />
+					<do_all exact="$stations.count" counter="$j">
+						<find_object_component name="$components" object="$stations.{$j}" class="class.destructible" multiple="true"/>
+					<do_all exact="$components.count" counter="$c">
+						<restore_object object="$stations.{$c}" hull="100" recursive="true" />
+						<set_object_min_hull object="$components.{$c}" exact="100"/>
+						<set_object_min_shield object="$components.{$c}" exact="100"/>
+					</do_all>
+						<restore_object object="$stations.{$j}" hull="100" recursive="true" />
+						<set_object_min_hull object="$stations.{$j}" exact="100"/>
+						<set_object_min_shield object="$stations.{$j}" exact="100"/>
+					</do_all>
+			</actions>
+		</cue>
+		<cue name="PlayerNotificationInitializing" instantiate="false" checktime="player.age + 10000ms" checkinterval="100ms">
+			<actions>
+				<do_all>
+					<play_sound object="player.primaryship" sound="'cpit_fight_screen_on'"/>
+					<show_notification caption="{6201985,5}" details="[{6201985,6}]" icon="achievement_notoriety_up" comment="Immortality Granted"/>
+				</do_all>
+			</actions>
+		</cue>
+		<cue name="PlayerNotificationComplete" instantiate="false" checktime="player.age + 15000ms" checkinterval="100ms">
+			<conditions>
+					<event_cue_completed cue="PlayerNotificationInitializing"/>
+			</conditions>
+			<actions>
+				<do_all>
+					<play_sound object="player.primaryship" sound="'cpit_fight_screen_on'"/>
+					<show_notification caption="{6201985,2}" details="[{6201985,1} + ':\n', player.primaryship.name + ':\n', {6201985,3} + ':\n', {6201985,4}]" icon="achievement_notoriety_up" comment="Immortality Granted"/>
+				</do_all>
+			</actions>
+		</cue>
+	</cues>
+</mdscript>
